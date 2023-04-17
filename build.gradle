@@ -30,7 +30,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'junit:junit:4.13.1'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     //Datasource 설정
@@ -51,6 +50,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 
     //Junit5 설정
+    testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
     testImplementation 'org.assertj:assertj-core:3.19.0'
@@ -72,7 +72,6 @@ jacocoTestReport {
         xml.required = false
         csv.required = false
         html.enabled true
-
         html.destination file("${buildDir}/jacoco/index.html")
     }
 
@@ -83,7 +82,9 @@ jacocoTestReport {
                             '**/*Application*',
                             '**/*Exception*',
                             '**/dto/**',
-                            '**/core/**'
+                            '**/core/**',
+                            '**/*Builder',
+                            '**/*Builder.*'
                             // ...
                     ])
                 })

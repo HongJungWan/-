@@ -1,8 +1,12 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.10'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id 'jacoco'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.10'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'jacoco'
+}
+
+jacoco {
+    toolVersion = '0.8.5'
 }
 
 group = 'moment'
@@ -10,84 +14,86 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	//스프링 부트 설정
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //스프링 부트 설정
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	//Datasource 설정
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+    //Datasource 설정
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
-	//람북 설정
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+    //람북 설정
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
-	//스프링 시큐리티 & JWT 설정
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    //스프링 시큐리티 & JWT 설정
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
-	//Junit5 설정
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    //Junit5 설정
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 jar {
-	enabled = false
+    enabled = false
 }
 
 jacocoTestReport {
-	reports {
-		xml.required = false
-		csv.required = false
-		html.enabled true
-	}
+    reports {
+        xml.required = false
+        csv.required = false
+        html.enabled true
 
-	afterEvaluate {
-		classDirectories.setFrom(
-				files(classDirectories.files.collect {
-					fileTree(dir: it, excludes: [
-							'**/*Application*',
-							'**/*Exception*',
-							'**/dto/**',
-							'**/core/**'
-							// ...
-					])
-				})
-		)
-	}
+        html.destination file("${buildDir}/jacoco/index.html")
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            '**/*Application*',
+                            '**/*Exception*',
+                            '**/dto/**',
+                            '**/core/**'
+                            // ...
+                    ])
+                })
+        )
+    }
 }
 
 jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			element = 'CLASS'
-		}
-	}
+    violationRules {
+        rule {
+            element = 'CLASS'
+        }
+    }
 }
 
 test {
-	jacoco {
-		destinationFile = file("$buildDir/jacoco/jacoco.exec")
-	}
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    }
 }

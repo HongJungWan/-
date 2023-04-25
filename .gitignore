@@ -2,6 +2,7 @@ HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
+gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -38,3 +39,5 @@ out/
 
 application.properties
 application.yml
+application-local.yml
+**/resources/application-test.yml

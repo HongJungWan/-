@@ -9,10 +9,9 @@ import moment.hong.component.user.domain.enumeration.UserRole;
 import moment.hong.core.common.BaseEntity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class User extends BaseEntity {
@@ -29,28 +28,35 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(name = "user_name", nullable = false, length = 20)
+    private String userName;
+
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
+
     @Column(nullable = false)
     @Embedded
     private Address address;
 
-    @Column(name = "nickname", nullable = false, length = 20, unique = true)
+    @Column(name = "nickname", nullable = false, length = 20)
     private String nickname;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(nullable = false, length = 4)
     private Integer age;
 
-    @Column(name = "self_introduction", nullable = false, length = 100)
+    @Column(name = "self_introduction", length = 100)
     private String selfIntroduction;
 
     @Builder
-    public User(Long id, UserRole userRole, Gender gender, Address address, String nickname, String email, Integer age,
-                String selfIntroduction) {
+    public User(Long id, UserRole userRole, Gender gender, String userName, String password, Address address, String nickname, String email, Integer age, String selfIntroduction) {
         this.id = id;
         this.userRole = userRole;
         this.gender = gender;
+        this.userName = userName;
+        this.password = password;
         this.address = address;
         this.nickname = nickname;
         this.email = email;
@@ -65,18 +71,5 @@ public class User extends BaseEntity {
         this.email = user.getEmail();
         this.age = user.getAge();
         this.selfIntroduction = user.getSelfIntroduction();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id.equals(user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

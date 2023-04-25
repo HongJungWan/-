@@ -23,8 +23,13 @@ public class UserTest {
         assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getUserRole()).isEqualTo(UserRole.USER);
+        assertThat(user.getUserRole().getValue()).isEqualTo("회원");
+        assertThat(user.getGender()).isEqualTo(Gender.MAN);
+        assertThat(user.getGender().getValue()).isEqualTo("남자");
         assertThat(user.getAddress().getCity()).isEqualTo("도시");
         assertThat(user.getAddress().getDetail()).isEqualTo("상세 주소");
+        assertThat(user.getUserName()).isEqualTo("홍정완");
+        assertThat(user.getPassword()).isEqualTo("비밀번호");
         assertThat(user.getEmail()).isEqualTo("hongjungwan");
         assertThat(user.getAge()).isEqualTo(25);
         assertThat(user.getSelfIntroduction()).isEqualTo("최고의 개발자");
@@ -50,9 +55,10 @@ public class UserTest {
         signUpTest.signUp(user);
         //then
         assertThat(signUpTest).isNotNull();
+        assertThat(signUpTest.toString()).isNotNull();
         assertThat(signUpTest.getGender()).isEqualTo(Gender.MAN);
         assertThat(signUpTest.getAddress()).isEqualTo(address);
-        assertThat(signUpTest.getNickname()).isEqualTo("홍정완");
+        assertThat(signUpTest.getNickname()).isEqualTo("닉네임");
         assertThat(signUpTest.getEmail()).isEqualTo("hongjungwan");
         assertThat(signUpTest.getAge()).isEqualTo(25);
         assertThat(signUpTest.getSelfIntroduction()).isEqualTo("최고의 개발자");
@@ -63,8 +69,10 @@ public class UserTest {
                 .id(1L)
                 .userRole(UserRole.USER)
                 .gender(Gender.MAN)
+                .userName("홍정완")
+                .password("비밀번호")
                 .address(address)
-                .nickname("홍정완")
+                .nickname("닉네임")
                 .email("hongjungwan")
                 .age(25)
                 .selfIntroduction("최고의 개발자")
@@ -75,7 +83,7 @@ public class UserTest {
         return User.builder()
                 .gender(Gender.MAN)
                 .address(address)
-                .nickname("홍정완")
+                .nickname("닉네임")
                 .email("hongjungwan")
                 .age(25)
                 .selfIntroduction("최고의 개발자")

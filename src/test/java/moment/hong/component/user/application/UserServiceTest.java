@@ -72,7 +72,6 @@ public class UserServiceTest {
 
     private User createUser() {
         return User.builder()
-                .id(1L)
                 .userRole(UserRole.USER)
                 .gender(Gender.MAN)
                 .userName("홍정완")

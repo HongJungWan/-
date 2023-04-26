@@ -21,7 +21,6 @@ public class UserTest {
         User user = createUser();
         //then
         assertThat(user).isNotNull();
-        assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getUserRole()).isEqualTo(UserRole.USER);
         assertThat(user.getUserRole().getValue()).isEqualTo("회원");
         assertThat(user.getGender()).isEqualTo(Gender.MAN);
@@ -66,7 +65,6 @@ public class UserTest {
 
     private User createUser() {
         return User.builder()
-                .id(1L)
                 .userRole(UserRole.USER)
                 .gender(Gender.MAN)
                 .userName("홍정완")

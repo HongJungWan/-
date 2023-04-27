@@ -1,6 +1,7 @@
 package moment.hong.component.user.application;
 
 import lombok.RequiredArgsConstructor;
+import moment.hong.component.pet.domain.Age;
 import moment.hong.component.user.domain.Address;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
@@ -27,7 +28,7 @@ public class UserService {
 
     @Transactional
     public UserDto join(String userName, String password, Gender gender, Address address, String nickname,
-                        String email, Integer age, String selfIntroduction) {
+                        String email, Age age, String selfIntroduction) {
         User user = userRepository.save(
                 User.builder()
                         .userRole(UserRole.USER)
@@ -46,7 +47,7 @@ public class UserService {
 
     @Transactional
     public String login(String email, String password) {
-        User user = userRepository.findByEmail(email);;
+        User user = userRepository.findByEmail(email);
         matchesPasswordCheck(password, user);
         return JwtTokenUtils.generateToken(email, secretKey, expiredTimeMs);
     }

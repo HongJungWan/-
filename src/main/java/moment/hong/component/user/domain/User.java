@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import moment.hong.component.pet.domain.Age;
 import moment.hong.component.user.domain.enumeration.Gender;
 import moment.hong.component.user.domain.enumeration.UserRole;
 import moment.hong.core.common.BaseEntity;
@@ -17,7 +18,6 @@ import javax.persistence.*;
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "user_role")
@@ -44,15 +44,15 @@ public class User extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(nullable = false, length = 4)
-    private Integer age;
+    @Embedded
+    private Age age;
 
     @Column(name = "self_introduction", length = 100)
     private String selfIntroduction;
 
     @Builder
     public User(UserRole userRole, Gender gender, String userName, String password, Address address,
-                String nickname, String email, Integer age, String selfIntroduction) {
+                String nickname, String email, Age age, String selfIntroduction) {
         this.userRole = userRole;
         this.gender = gender;
         this.userName = userName;

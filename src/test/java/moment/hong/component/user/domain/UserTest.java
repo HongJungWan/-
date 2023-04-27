@@ -1,5 +1,6 @@
 package moment.hong.component.user.domain;
 
+import moment.hong.component.pet.domain.Age;
 import moment.hong.component.user.domain.enumeration.Gender;
 import moment.hong.component.user.domain.enumeration.UserRole;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTest {
     private Address address;
+    private Age age;
 
     @BeforeEach
     void setUp() {
@@ -31,9 +33,9 @@ public class UserTest {
         assertThat(user.getUserName()).isEqualTo("홍정완");
         assertThat(user.getPassword()).isEqualTo("비밀번호");
         assertThat(user.getEmail()).isEqualTo("hongjungwan");
-        assertThat(user.getAge()).isEqualTo(25);
+        assertThat(user.getAge()).isEqualTo(age);
         assertThat(user.getSelfIntroduction()).isEqualTo("최고의 개발자");
-        assertThat(user.getAge()).isEqualTo(25);
+        assertThat(user.getAge()).isEqualTo(age);
     }
 
     @Test
@@ -60,7 +62,7 @@ public class UserTest {
         assertThat(signUpTest.getAddress()).isEqualTo(address);
         assertThat(signUpTest.getNickname()).isEqualTo("닉네임");
         assertThat(signUpTest.getEmail()).isEqualTo("hongjungwan");
-        assertThat(signUpTest.getAge()).isEqualTo(25);
+        assertThat(signUpTest.getAge()).isEqualTo(age);
         assertThat(signUpTest.getSelfIntroduction()).isEqualTo("최고의 개발자");
     }
 
@@ -73,7 +75,7 @@ public class UserTest {
                 .address(address)
                 .nickname("닉네임")
                 .email("hongjungwan")
-                .age(25)
+                .age(age)
                 .selfIntroduction("최고의 개발자")
                 .build();
     }
@@ -84,7 +86,7 @@ public class UserTest {
                 .address(address)
                 .nickname("닉네임")
                 .email("hongjungwan")
-                .age(25)
+                .age(age)
                 .selfIntroduction("최고의 개발자")
                 .build();
     }

@@ -81,7 +81,7 @@ public class UserServiceTest {
                 .password("123")
                 .nickname("닉네임")
                 .email("hongjungwan")
-                .age(25)
+                .age(age)
                 .selfIntroduction("최고의 개발자")
                 .build();
     }

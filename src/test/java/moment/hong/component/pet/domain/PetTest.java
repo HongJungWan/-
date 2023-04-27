@@ -72,7 +72,7 @@ class PetTest {
                 .address(address)
                 .nickname("닉네임")
                 .email("hongjungwan")
-                .age(25)
+                .age(age)
                 .selfIntroduction("최고의 개발자")
                 .build();
     }

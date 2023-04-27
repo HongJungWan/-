@@ -2,6 +2,7 @@ package moment.hong.component.usermeeting.domain;
 
 import moment.hong.component.meeting.domain.Meeting;
 import moment.hong.component.meeting.domain.enumeration.MeetingStatus;
+import moment.hong.component.pet.domain.Age;
 import moment.hong.component.user.domain.Address;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
@@ -14,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class UserMeetingTest {
     private Address address;
+    private Age age;
     private MeetingStatus meetingStatus;
 
     @BeforeEach
     void setUp() {
+        age = new Age(25, 2023, 3);
         address = new Address("도시", "상세 주소");
         meetingStatus = MeetingStatus.AVAILABLE;
     }
@@ -53,7 +56,7 @@ class UserMeetingTest {
                 .address(address)
                 .nickname("닉네임")
                 .email("hongjungwan")
-                .age(25)
+                .age(age)
                 .selfIntroduction("최고의 개발자")
                 .build();
     }

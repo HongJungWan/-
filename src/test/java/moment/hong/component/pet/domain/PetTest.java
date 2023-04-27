@@ -20,6 +20,7 @@ class PetTest {
 
     @BeforeEach
     void setUp() {
+        age = new Age();
         age = new Age(10, 2023, 4);
         address = new Address("도시", "상세주소");
         user = createUser();
@@ -49,6 +50,7 @@ class PetTest {
         pet.update(updatedPet);
         //then
         assertThat(pet).isNotNull();
+        assertThat(pet.getId()).isNull();
         assertThat(pet.getName()).isEqualTo("댕댕걸");
         assertThat(pet.getAge()).isNotNull();
         assertThat(pet.getAge().getAge()).isEqualTo(10);

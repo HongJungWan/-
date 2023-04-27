@@ -21,6 +21,7 @@ public class UserTest {
         User user = createUser();
         //then
         assertThat(user).isNotNull();
+        assertThat(user.getId()).isNull();
         assertThat(user.getUserRole()).isEqualTo(UserRole.USER);
         assertThat(user.getUserRole().getValue()).isEqualTo("회원");
         assertThat(user.getGender()).isEqualTo(Gender.MAN);

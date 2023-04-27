@@ -2,6 +2,7 @@ package moment.hong.component.user.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import moment.hong.component.pet.domain.Age;
 import moment.hong.component.user.domain.Address;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
@@ -27,10 +28,12 @@ public class UserServiceTest {
     private final UserService userService;
     private final UserRepository userRepository;
     Address address;
+    Age age;
 
     @BeforeEach
     void setUp() {
-        address = new Address("도시", "서울 강남구 테헤란로");
+        this.address = new Address("도시", "서울 강남구 테헤란로");
+        this.age = new Age(15, 2023, 4);
     }
 
     @Test
@@ -65,10 +68,9 @@ public class UserServiceTest {
         // when & then
         assertAll("passwordCheck",
                 () -> assertThrows(IllegalArgumentException.class,
-                () -> userService.matchesPasswordCheck(invalidPassword, user))
+                        () -> userService.matchesPasswordCheck(invalidPassword, user))
         );
     }
-
 
     private User createUser() {
         return User.builder()

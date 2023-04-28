@@ -2,6 +2,7 @@ package moment.hong.component.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import moment.hong.component.pet.domain.Age;
 import moment.hong.component.user.domain.Address;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
@@ -24,7 +25,7 @@ public class UserDto implements UserDetails {
     private Address address;
     private String nickname;
     private String email;
-    private Integer age;
+    private Age age;
     private String selfIntroduction;
 
     public static UserDto from(User user) {
@@ -39,7 +40,7 @@ public class UserDto implements UserDetails {
                 user.getEmail(),
                 user.getAge(),
                 user.getSelfIntroduction()
-                );
+        );
     }
 
     @Override
@@ -56,6 +57,7 @@ public class UserDto implements UserDetails {
     public String getUsername() {
         return this.userName;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return false;

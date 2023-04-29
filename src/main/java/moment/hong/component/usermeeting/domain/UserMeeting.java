@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import moment.hong.component.meeting.domain.Meeting;
 import moment.hong.component.user.domain.User;
-import moment.hong.core.common.BaseEntity;
 
 import javax.persistence.*;
 
@@ -15,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "user_meeting")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserMeeting extends BaseEntity {
+public class UserMeeting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

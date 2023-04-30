@@ -4,6 +4,14 @@
 
 <br/><br/>
 
+### 💡 프로젝트 목표
+
+> 1️⃣ 섣부른 최적화보다는 OOP 개념 원칙하에 프로젝트를 진행한다. <br/><br/>
+> 2️⃣ 객체지향 생활체조 원칙과 테스트 코드를 생활화한다. <br/><br/>
+> 3️⃣ 요구사항 추가 및 변경으로 인한 리팩토링을 두려워하지 말자. <br/>
+
+<br/><br/>
+
 ### 👬 팀원 소개
 
 * **홍정완(Back-End, AWS Infra)**
@@ -22,7 +30,9 @@
 
 <br/><br/>
 
-### ERD(Entity Relationship Diagram)
+### 📄 ERD - 계속 업데이트 예정
+
+![04-29 수정된 ERD](https://user-images.githubusercontent.com/76596316/235294049-b8612ecf-c874-4a83-ab8b-a6ce1414abb9.png)
 
 <br/><br/>
 

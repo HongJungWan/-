@@ -40,4 +40,6 @@ out/
 application.properties
 application.yml
 application-local.yml
+application-batch.yml
 **/resources/application-test.yml
+quartz.properties

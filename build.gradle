@@ -31,9 +31,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    //스프링 배치 설정
-    implementation 'org.springframework.batch:spring-batch-core:4.3.3'
-    implementation 'org.springframework.batch:spring-batch-infrastructure:4.3.3'
+    //quartz 설정
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
 
     //타임리프 설정
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -91,7 +90,8 @@ jacocoTestReport {
                             '**/dto/**',
                             '**/core/**',
                             '**/*Builder',
-                            '**/*Builder.*'
+                            '**/*Builder.*',
+                            '**/batch/**'
                             // ...
                     ])
                 })

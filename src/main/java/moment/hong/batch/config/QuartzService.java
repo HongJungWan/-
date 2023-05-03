@@ -29,7 +29,7 @@ public class QuartzService {
             paramsMap.put("executeCount", 1);
             paramsMap.put("date", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-            addJob(QuartzJob.class, "QuartzJob", "Quartz Job 입니다", paramsMap, "0/5 * * * * ?");
+            addJob(QuartzJob.class, "QuartzJob", "Quartz Job 입니다", paramsMap, "* * * 5 * ?");
         } catch (Exception e) {
             log.error("addJob error  : {}", e);
         }

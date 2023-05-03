@@ -18,19 +18,16 @@ public class QuartzTriggerListener implements TriggerListener {
         log.info("Trigger 실행");
     }
 
-    /**
-     * @Content: 결과가 true 이면 JobListener jobExecutionVetoed(JOB 중단) 실행
-     */
     @Override
     public boolean vetoJobExecution(Trigger trigger, JobExecutionContext context) {
         log.info("Trigger 상태 체크");
         JobDataMap map = context.getJobDetail().getJobDataMap();
 
-        int executeCount = 10;
+        int executeCount = 1;
         if (map.containsKey("executeCount")) {
             executeCount = (int) map.get("executeCount");
         }
-        return executeCount >= 11;
+        return executeCount >= 1;
     }
 
     @Override

@@ -30,9 +30,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
+    
     //quartz 설정
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
+
+    //스프링 batch 설정
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
 
     //타임리프 설정
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

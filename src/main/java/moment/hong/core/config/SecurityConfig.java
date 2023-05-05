@@ -15,15 +15,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
+                .antMatchers("**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
-                    .disable()
+                .disable()
                 .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/")
-                    .and()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .and()
                 .csrf().disable();
     }
 

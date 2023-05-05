@@ -1,0 +1,4 @@
+FROM openjdk:11-alpine
+ARG JAR_FILE=/build/libs/hong-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} /hong.jar
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=batch", "/hong.jar"]

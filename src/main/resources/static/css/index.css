@@ -1,0 +1,215 @@
+@import url('http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css');
+
+@font-face {
+    font-family: 'MaruBuri-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SLEIGothicTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'SLEIGothicTTF';
+}
+
+body {
+    font-size: 15px;
+    color: #222222;
+    line-height: 1.6em;
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+h1, h2, h3, h3, h4, h5, h6 {
+    font-weight: 500;
+    margin-top: 0;
+}
+
+header .logout a {
+    font-size: 14px;
+}
+
+header .logout a:last-child {
+    margin-right: 50px;
+}
+
+/* 인증 & 예약 공통 */
+.frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+}
+
+.init {
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    padding: 50px;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    /* display: inline-block; */
+    margin: 350px;
+}
+
+/* 본인인증 */
+.init.check h1 {
+    font-size: 45px;
+    color: #FFFFFF;
+    margin-bottom: 70px;
+}
+
+/* sns 연동 */
+.sns-info {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.sns-info b {
+    font-family: 'MaruBuri-Regular';
+}
+
+.sns-info .sns {
+    margin: 10px;
+}
+
+.sns-info .sns a i {
+    font-size: 50px;
+    width: 70px;
+    height: 70px;
+    line-height: 72px;
+    border-radius: 50%;
+    color: #fff;
+    margin: 5px;
+    transition: 0.35s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sns-info .sns a i:hover {
+    transform: scale(1.05);
+}
+
+.sns-info .sns a:nth-child(1) i {
+    background-color: #50C8FF;
+}
+
+.sns-info .sns a:nth-child(2) i {
+    background-color: #00C300;
+}
+
+.sns-info .sns a:nth-child(3) i {
+    background-color: #ffdc00;
+    color: brown;
+}
+
+/* sns 알려주는 박스 */
+.sns a {
+    position: relative;
+}
+
+.sns a:before {
+    content: attr(data-text);
+    position: absolute;
+    background-color: rgba(170, 170, 170, 0.4);
+    border-radius: 3px;
+    color: #222222;
+    width: 60px;
+    height: 25px;
+    font-size: 13px;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    line-height: 25px;
+}
+
+.sns a:after {
+    content: '';
+    position: absolute;
+    background-color: rgba(170, 170, 170, 0.4);
+    width: 4px;
+    height: 4px;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.sns a:before,
+.sns a:after {
+    display: none;
+}
+
+.sns a:hover:before,
+.sns a:hover:after {
+    display: block;
+}
+
+/* 예약하기 */
+.reserve {
+    height: 400px;
+}
+
+.reserve a {
+
+    display: inline-block;
+    width: 180px;
+    height: 55px;
+    text-align: center;
+    padding: 15px 0;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.reserve a:hover {
+    transform: scale(1.05);
+}
+
+/* 등록 */
+.register {
+    width: 460px;
+    margin: auto;
+}
+
+.register .hR {
+    color: dodgerblue;
+    text-align: center;
+}
+
+.info {
+    margin: 5px 0;
+}
+
+/* .register input */
+.register input:not(input[type=number]) {
+    border: 1px solid #dadada;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 3px;
+}
+
+.register input[type=submit] {
+    color: #fff;
+    background-color: dodgerblue;
+    margin-top: 20px;
+}
+
+.register input:not(input[type=number]):focus {
+    border: 1px solid skyblue;
+}

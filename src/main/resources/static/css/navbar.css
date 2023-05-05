@@ -1,0 +1,33 @@
+
+.main {
+    width: 100%;
+    height: 90%;
+    display: block;
+    margin: 0px auto;
+    background-size: cover;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0px auto;
+}
+
+.card-body {
+    border-radius: 30%;
+}
+
+.card {
+    border-radius: 50%;
+}
+
+ul.list-group {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.list-group-item {
+    border-radius: 50%;
+    border: none;
+}

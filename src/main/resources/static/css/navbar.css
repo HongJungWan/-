@@ -1,0 +1,54 @@
+
+.main {
+    width: 100%;
+    height: 90%;
+    display: block;
+    margin: 0px auto;
+    background-size: cover;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0px auto;
+}
+
+.card-body {
+    border-radius: 30%;
+}
+
+.card {
+    border-radius: 50%;
+}
+
+ul.list-group {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.list-group-item {
+    border-radius: 50%;
+    border: none;
+}
+
+.search {
+    background-color: #FFFFFF; /* 버튼의 배경색을 파란색으로 설정 */
+    padding: 15px; /* 버튼의 패딩을 설정 */
+    margin-bottom: 100px; /* 버튼 위쪽 여백을 설정 */
+}
+
+.search input[type="text"] {
+    width: 30%; /* 검색 창의 너비를 300px로 설정 */
+    height: 40px;
+}
+
+.search button {
+    background-color: dodgerblue;
+    color: white; /* 버튼의 텍스트 색상을 흰색으로 설정 */
+    border: none; /* 버튼의 테두리를 없애줍니다. */
+    padding: 6px; /* 버튼의 패딩을 설정 */
+    width: 60px;
+    height: 45px;
+    border-radius: 15%;
+}

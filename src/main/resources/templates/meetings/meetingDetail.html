@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>🐾 모임 상세 정보 🐾</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+
+    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo-plot-listing.css}">
+</head>
+<body>
+<header class="header-area header-sticky wow slideInDown" data-wow-delay="0s" data-wow-duration="0.75s"
+        th:insert="fragments/header.html">
+</header>
+<div class="register">
+    <br/><br/><br/>
+    <h1 class="hR">모임 상세 정보</h1>
+    <form method="get"
+          th:action="@{/meetings/{meetingId} (meetingId=${meetingDto.getId()})}"
+          th:object="${meetingDto}">
+        <div class="info">
+            <label for="title"><b><br/>모임 명</b></label>
+            <input disabled id="title" th:field="*{title}" type="text">
+        </div>
+        <div class="info">
+            <label for="description"><b><br/>모임 소개</b></label>
+            <input disabled id="description" th:field="*{description}" type="text">
+        </div>
+        <div class="info">
+            <label for="meetingPlace"><b><br/>모임 장소</b></label>
+            <input disabled id="meetingPlace" th:field="*{meetingPlace}" type="text">
+        </div>
+        <p>구글 맵 지도 넣기 </p>
+        <div class="info">
+            <label><b><br/>현재 참여 인원</b></label> 👉
+            <span th:text="${meetingDto.participant}+ ' /'" disabled></span>
+            <span th:text="${meetingDto.maximumPeople}" disabled></span><br/>
+        </div>
+        <div class="info">
+            <label><b><br/>모집 기간 🔎 </b></label>
+            <span th:text="${#temporals.format(meetingDto.startDateTime, 'YY-MM-dd HH:mm')}+' ~ '"></span>
+            <span th:text="${#temporals.format(meetingDto.endDateTime, 'YY-MM-dd HH:mm')}"></span>
+        </div>
+        <br/><br/><br/>
+        <input th:onclick="|location.href='@{/meetings/on}'|" type="submit" value="1초 만에 참여하기">
+        <input th:onclick="|location.href='@{/meetings/on}'|" type="button" value="취소">
+        <br/><br/>
+    </form>
+</div>
+</body>
+<footer class="footer" data-wow-delay="0s" data-wow-duration="0.75s"
+        th:insert="fragments/footer.html">
+</footer>
+</html>

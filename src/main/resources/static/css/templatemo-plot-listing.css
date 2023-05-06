@@ -1129,8 +1129,10 @@ Footer
 */
 
 footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     border-top: 1px solid #eee;
-    padding-top: 80px;
 }
 
 footer h4 {
@@ -1184,9 +1186,10 @@ footer .contact-us a:hover {
 
 footer .sub-footer {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 40px 0px;
-    border-top: 1px solid #eee;
+    border-top: none;
 }
 
 

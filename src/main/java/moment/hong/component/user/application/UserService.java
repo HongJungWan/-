@@ -1,8 +1,8 @@
 package moment.hong.component.user.application;
 
 import lombok.RequiredArgsConstructor;
-import moment.hong.component.pet.domain.Age;
-import moment.hong.component.user.domain.Address;
+import moment.hong.component.user.api.request.UserLoginForm;
+import moment.hong.component.user.api.request.UserSingUpForm;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
 import moment.hong.component.user.domain.enumeration.UserRole;
@@ -27,29 +27,25 @@ public class UserService {
     private Long expiredTimeMs;
 
     @Transactional
-    public UserDto join(String userName, String password, Gender gender, Address address, String nickname,
-                        String email, Age age, String selfIntroduction) {
+    public UserDto join(UserSingUpForm userSingUpForm) {
         User user = userRepository.save(
                 User.builder()
                         .userRole(UserRole.USER)
-                        .gender(gender)
-                        .userName(userName)
-                        .password(encoder.encode(password))
-                        .address(address)
-                        .nickname(nickname)
-                        .email(email)
-                        .age(age)
-                        .selfIntroduction(selfIntroduction)
+                        .gender(Gender.valueOf(userSingUpForm.getGender()))
+                        .userName(userSingUpForm.getUserName())
+                        .password(encoder.encode(userSingUpForm.getPassword()))
+                        .nickname(userSingUpForm.getNickname())
+                        .email(userSingUpForm.getEmail())
                         .build()
         );
         return UserDto.from(user);
     }
 
     @Transactional
-    public String login(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        matchesPasswordCheck(password, user);
-        return JwtTokenUtils.generateToken(email, secretKey, expiredTimeMs);
+    public String login(UserLoginForm userLoginForm) {
+        User user = userRepository.findByEmail(userLoginForm.getEmail());
+        matchesPasswordCheck(userLoginForm.getPassword(), user);
+        return JwtTokenUtils.generateToken(userLoginForm.getEmail(), secretKey, expiredTimeMs);
     }
 
     public void matchesPasswordCheck(String password, User user) {

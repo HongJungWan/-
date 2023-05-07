@@ -213,3 +213,21 @@ header .logout a:last-child {
 .register input:not(input[type=number]):focus {
     border: 1px solid skyblue;
 }
+
+/* .register button */
+.register button:not(input[type=number]) {
+    border: 1px solid #dadada;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 3px;
+}
+
+.register button[type=submit] {
+    color: #fff;
+    background-color: dodgerblue;
+    margin-top: 20px;
+}
+
+.register button:not(input[type=number]):focus {
+    border: 1px solid skyblue;
+}

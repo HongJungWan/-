@@ -43,7 +43,10 @@
             <span th:text="${#temporals.format(meetingDto.endDateTime, 'YY-MM-dd HH:mm')}"></span>
         </div>
         <br/><br/><br/>
-        <input th:onclick="|location.href='@{/meetings/on}'|" type="submit" value="1초 만에 참여하기">
+        <form method="get"
+              th:action="@{/meetings/on}">
+            <input th:onclick="|location.href='@{/meetings/on}'|" type="submit" value="3초 만에 신청 완료하기">
+        </form>
         <input th:onclick="|location.href='@{/meetings/on}'|" type="button" value="취소">
         <br/><br/>
     </form>

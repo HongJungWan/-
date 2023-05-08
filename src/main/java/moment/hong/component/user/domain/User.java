@@ -22,7 +22,7 @@ public class User extends BaseEntity {
 
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
-    private UserRole userRole = UserRole.GUEST;
+    private UserRole userRole = UserRole.USER;
 
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -34,7 +34,7 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false)
+    @Column
     @Embedded
     private Address address;
 
@@ -45,6 +45,11 @@ public class User extends BaseEntity {
     private String email;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "age", column = @Column(nullable = true)),
+            @AttributeOverride(name = "birthYear", column = @Column(nullable = true)),
+            @AttributeOverride(name = "birthMonth", column = @Column(nullable = true))
+    })
     private Age age;
 
     @Column(name = "self_introduction", length = 100)

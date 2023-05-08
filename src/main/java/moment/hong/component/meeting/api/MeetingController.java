@@ -28,13 +28,6 @@ public class MeetingController {
         return "meetings/meeting";
     }
 
-    @GetMapping("/off")
-    public String offMeeting(Model model, @RequestParam(required = false) String titleSearch) {
-        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch);
-        model.addAttribute("meetingDtoList", meetingDtoList);
-        return "meetings/meeting";
-    }
-
     @GetMapping("/{meetingId}")
     public String detailOffMeeting(@PathVariable Long meetingId, Model model) {
         MeetingDto meetingDto = meetingService.meeting(meetingId);

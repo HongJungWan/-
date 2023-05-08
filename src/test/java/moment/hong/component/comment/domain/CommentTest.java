@@ -33,12 +33,7 @@ class CommentTest {
         //given & when
         Comment comment = createComment();
         //then
-        assertThat(comment.getId()).isNull();
-        assertThat(comment.getContent()).isEqualTo("댓글 테스트");
-        assertThat(comment.getUser()).isNotNull();
-        assertThat(comment.getUser().getEmail()).isEqualTo("hongjungwan");
-        assertThat(comment.getMeeting().getTitle()).isEqualTo("최고의 개발자");
-        assertThat(comment.getMeeting()).isNotNull();
+        댓글_생성_검증(comment);
     }
 
     private Comment createComment() {
@@ -75,5 +70,14 @@ class CommentTest {
                 .startDateTime(null)
                 .endDateTime(null)
                 .build();
+    }
+
+    private static void 댓글_생성_검증(Comment comment) {
+        assertThat(comment.getId()).isNull();
+        assertThat(comment.getContent()).isEqualTo("댓글 테스트");
+        assertThat(comment.getUser()).isNotNull();
+        assertThat(comment.getUser().getEmail()).isEqualTo("hongjungwan");
+        assertThat(comment.getMeeting().getTitle()).isEqualTo("최고의 개발자");
+        assertThat(comment.getMeeting()).isNotNull();
     }
 }

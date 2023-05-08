@@ -3,6 +3,8 @@ package moment.hong.component.user.application;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moment.hong.component.pet.domain.Age;
+import moment.hong.component.user.api.request.UserLoginForm;
+import moment.hong.component.user.api.request.UserSignUpForm;
 import moment.hong.component.user.domain.Address;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
@@ -32,6 +34,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
+        this.address = new Address();
         this.address = new Address("도시", "서울 강남구 테헤란로");
         this.age = new Age(15, 2023, 4);
     }
@@ -39,21 +42,17 @@ public class UserServiceTest {
     @Test
     void 회원가입() {
         //given & when
-        User user = createUser();
-        UserDto userDto = getJoin(user);
+        UserDto userDto = getJoin(createUserSignUpForm());
         //then
-        assertThat(userDto.getEmail()).isEqualTo(user.getEmail());
-        assertThat(userDto.getNickname()).isEqualTo(user.getNickname());
-        assertThat(userDto.getUserRole()).isEqualTo(user.getUserRole());
-        assertThat(userDto.getUsername()).isEqualTo(user.getUserName());
+        회원가입_검증(userDto);
     }
 
     @Test
     void 로그인() {
         //given & when
-        User user = createUser();
-        getJoin(user);
-        String jwtToken = getLogin(user);
+        getJoin(createUserSignUpForm());
+        UserLoginForm userLoginForm = UserLoginForm.of(createUser().getEmail(), createUser().getPassword());
+        String jwtToken = getLogin(userLoginForm);
         //then
         assertThat(jwtToken).isNotNull();
         log.info(jwtToken.toString());
@@ -86,23 +85,27 @@ public class UserServiceTest {
                 .build();
     }
 
-    private UserDto getJoin(User user) {
-        return userService.join(
-                user.getUserName(),
-                user.getPassword(),
-                user.getGender(),
-                user.getAddress(),
-                user.getNickname(),
-                user.getEmail(),
-                user.getAge(),
-                user.getSelfIntroduction()
-        );
+    private static UserSignUpForm createUserSignUpForm() {
+        return UserSignUpForm.builder()
+                .userName("홍정완")
+                .password("123")
+                .gender(String.valueOf(Gender.MAN))
+                .nickname("닉네임")
+                .email("hongjungwan")
+                .build();
     }
 
-    private String getLogin(User user) {
-        return userService.login(
-                user.getEmail(),
-                user.getPassword()
-        );
+    private UserDto getJoin(UserSignUpForm userSignUpForm) {
+        return userService.join(userSignUpForm);
+    }
+
+    private String getLogin(UserLoginForm userLoginForm) {
+        return userService.login(userLoginForm);
+    }
+
+    private static void 회원가입_검증(UserDto userDto) {
+        assertThat(userDto.getEmail()).isEqualTo(createUserSignUpForm().getEmail());
+        assertThat(userDto.getNickname()).isEqualTo(createUserSignUpForm().getNickname());
+        assertThat(userDto.getUsername()).isEqualTo(createUserSignUpForm().getUserName());
     }
 }

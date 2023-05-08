@@ -21,17 +21,7 @@ class MeetingTest {
         //given & when
         Meeting meeting = createMeeting();
         //then
-        assertThat(meeting.getMeetingStatus()).isEqualTo(MeetingStatus.AVAILABLE);
-        assertThat(meeting.getMeetingStatus().getDescription()).isEqualTo("참여 가능");
-        assertThat(meeting.getId()).isNull();
-        assertThat(meeting.getTitle()).isEqualTo("최고의 개발자");
-        assertThat(meeting.getDescription()).isEqualTo("꽤 괜찮은 개발자가 되기 위해 이것저것 합니다.");
-        assertThat(meeting.getMeetingPlace()).isEqualTo("상암");
-        assertThat(meeting.getMaximumPeople()).isEqualTo(4);
-        assertThat(meeting.getMinimumPeople()).isEqualTo(1);
-        assertThat(meeting.getParticipants()).isEqualTo(3);
-        assertThat(meeting.getStartDateTime()).isNull();
-        assertThat(meeting.getEndDateTime()).isNull();
+        미팅_생성_검증(meeting);
     }
 
     @Test
@@ -56,5 +46,19 @@ class MeetingTest {
                 .startDateTime(null)
                 .endDateTime(null)
                 .build();
+    }
+
+    private static void 미팅_생성_검증(Meeting meeting) {
+        assertThat(meeting.getMeetingStatus()).isEqualTo(MeetingStatus.AVAILABLE);
+        assertThat(meeting.getMeetingStatus().getDescription()).isEqualTo("참여 가능");
+        assertThat(meeting.getId()).isNull();
+        assertThat(meeting.getTitle()).isEqualTo("최고의 개발자");
+        assertThat(meeting.getDescription()).isEqualTo("꽤 괜찮은 개발자가 되기 위해 이것저것 합니다.");
+        assertThat(meeting.getMeetingPlace()).isEqualTo("상암");
+        assertThat(meeting.getMaximumPeople()).isEqualTo(4);
+        assertThat(meeting.getMinimumPeople()).isEqualTo(1);
+        assertThat(meeting.getParticipants()).isEqualTo(3);
+        assertThat(meeting.getStartDateTime()).isNull();
+        assertThat(meeting.getEndDateTime()).isNull();
     }
 }

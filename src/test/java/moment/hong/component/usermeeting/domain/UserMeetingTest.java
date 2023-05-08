@@ -30,10 +30,7 @@ class UserMeetingTest {
         //given & when
         UserMeeting userMeeting = createUserMeeting();
         //then
-        assertNotNull(userMeeting);
-        assertThat(userMeeting.getId()).isNull();
-        assertThat(userMeeting.getUser().getEmail()).isEqualTo("hongjungwan");
-        assertThat(userMeeting.getMeeting().getTitle()).isEqualTo("최고의 개발자");
+        유저_미팅_생성_검증(userMeeting);
     }
 
     @Test
@@ -41,10 +38,7 @@ class UserMeetingTest {
         //given & when
         UserMeeting userMeeting = UserMeeting.of(createUser(), createMeeting());
         //then
-        assertNotNull(userMeeting);
-        assertThat(userMeeting.getId()).isNull();
-        assertThat(userMeeting.getUser().getEmail()).isEqualTo("hongjungwan");
-        assertThat(userMeeting.getMeeting().getTitle()).isEqualTo("최고의 개발자");
+        유저_미팅_생성_검증(userMeeting);
     }
 
     private User createUser() {
@@ -80,5 +74,12 @@ class UserMeetingTest {
                 .user(createUser())
                 .meeting(createMeeting())
                 .build();
+    }
+
+    private static void 유저_미팅_생성_검증(UserMeeting userMeeting) {
+        assertNotNull(userMeeting);
+        assertThat(userMeeting.getId()).isNull();
+        assertThat(userMeeting.getUser().getEmail()).isEqualTo("hongjungwan");
+        assertThat(userMeeting.getMeeting().getTitle()).isEqualTo("최고의 개발자");
     }
 }

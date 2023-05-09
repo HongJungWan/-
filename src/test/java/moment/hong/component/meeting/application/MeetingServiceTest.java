@@ -6,6 +6,12 @@ import moment.hong.component.meeting.domain.Meeting;
 import moment.hong.component.meeting.domain.enumeration.MeetingStatus;
 import moment.hong.component.meeting.dto.MeetingDto;
 import moment.hong.component.meeting.repository.MeetingRepository;
+import moment.hong.component.pet.domain.Age;
+import moment.hong.component.user.domain.Address;
+import moment.hong.component.user.domain.User;
+import moment.hong.component.user.domain.enumeration.Gender;
+import moment.hong.component.user.domain.enumeration.UserRole;
+import moment.hong.component.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +32,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class MeetingServiceTest {
     private final MeetingService meetingService;
     private final MeetingRepository meetingRepository;
+    private final UserRepository userRepository;
+    Age age;
+    Address address;
     Meeting meeting;
     Meeting save;
 
@@ -33,6 +42,9 @@ class MeetingServiceTest {
     void setUp() {
         meeting = createMeeting();
         save = meetingRepository.save(meeting);
+        age = new Age(20, 2032, 5);
+        address = new Address("도시", "상세 주소");
+        userRepository.save(createUser());
     }
 
     @Test
@@ -57,7 +69,8 @@ class MeetingServiceTest {
     @DisplayName("검색어 존재 X -> 모임 전체 조회")
     void 모임_전체_조회() {
         //given & when
-        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(null);
+        String userName = "홍정완";
+        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(null, userName);
         //then
         모임_전체_조회_검증(meetingDtos);
     }
@@ -67,9 +80,22 @@ class MeetingServiceTest {
     void 모임_검색() {
         //given & when
         String searchTitle = "테스트";
-        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(searchTitle);
+        String userName = "홍정완";
+        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(searchTitle, userName);
         //then
         모임_검색_조회_검증(meetingDtos);
+    }
+
+    @Test
+    @DisplayName("미 로그인 시 -> 모임_검색_실패")
+    void 모임_검색_실패() {
+        //given & when
+        String searchTitle = "테스트";
+        String userName = null;
+        //then
+        assertThatThrownBy(() -> meetingService.searchOffMeeting(searchTitle, userName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("로그인 후 이용해주세요.");
     }
 
     private static Meeting createMeeting() {
@@ -84,6 +110,20 @@ class MeetingServiceTest {
                 .participants(2)
                 .startDateTime(null)
                 .endDateTime(null)
+                .build();
+    }
+
+    private User createUser() {
+        return User.builder()
+                .userRole(UserRole.USER)
+                .gender(Gender.MAN)
+                .userName("홍정완")
+                .address(address)
+                .password("123")
+                .nickname("닉네임")
+                .email("hongjungwan")
+                .age(age)
+                .selfIntroduction("최고의 개발자")
                 .build();
     }
 

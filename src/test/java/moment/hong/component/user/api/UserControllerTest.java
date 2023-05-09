@@ -1,6 +1,5 @@
 package moment.hong.component.user.api;
 
-import moment.hong.component.user.api.request.UserLoginForm;
 import moment.hong.component.user.api.request.UserSignUpForm;
 import moment.hong.component.user.domain.enumeration.Gender;
 import moment.hong.component.user.repository.UserRepository;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,6 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @MockMvcTest
 class UserControllerTest {
+    UserSignUpForm userSignUpForm = createUserSignUpForm();
+    private static int email = 1;
+
     @Autowired
     MockMvc mockMvc;
 
@@ -36,15 +39,14 @@ class UserControllerTest {
     @Test
     @DisplayName("로그인 시도 테스트")
     void testLogin() throws Exception {
-        //given & when
-        signUp();
-        UserLoginForm userLoginForm = UserLoginForm.of("hong43ok@gmail.com", "123");
-        //then
+        // given
+        signUpTestCase();
+        // when & then
         mockMvc.perform(post("/users/login")
-                        .param("email", userLoginForm.getEmail())
-                        .param("password", userLoginForm.getPassword()))
+                        .param("email", userSignUpForm.getEmail() + --email)
+                        .param("password", userSignUpForm.getPassword()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(unauthenticated());
+                .andExpect(authenticated().withUsername(userSignUpForm.getUserName()));
     }
 
     @Test
@@ -60,17 +62,8 @@ class UserControllerTest {
     @Test
     @DisplayName("회원 가입 등록 테스트")
     void signUp() throws Exception {
-        //given & when
-        UserSignUpForm userSignUpForm = createUserSignUpForm();
-        //then
-        mockMvc.perform(post("/users/sign-up")
-                        .param("email", userSignUpForm.getEmail())
-                        .param("userName", userSignUpForm.getUserName())
-                        .param("password", userSignUpForm.getPassword())
-                        .param("nickname", userSignUpForm.getNickname())
-                        .param("gender", userSignUpForm.getGender()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(unauthenticated());
+        //given & when & then
+        signUpTestCase();
     }
 
     private static UserSignUpForm createUserSignUpForm() {
@@ -81,5 +74,16 @@ class UserControllerTest {
                 .nickname("닉네임")
                 .gender(String.valueOf(Gender.MAN))
                 .build();
+    }
+
+    private void signUpTestCase() throws Exception {
+        mockMvc.perform(post("/users/sign-up")
+                        .param("email", userSignUpForm.getEmail() + email++)
+                        .param("userName", userSignUpForm.getUserName())
+                        .param("password", userSignUpForm.getPassword())
+                        .param("nickname", userSignUpForm.getNickname())
+                        .param("gender", userSignUpForm.getGender()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(unauthenticated());
     }
 }

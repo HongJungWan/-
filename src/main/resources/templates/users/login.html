@@ -20,11 +20,11 @@
     <form th:action="@{/users/login}" method="post" th:object="${userLoginForm}">
         <div>
             <label for="email">이메일</label>
-            <input type="text" id="email" th:field="*{email}" required>
+            <input type="text" id="email" name="email" th:field="*{email}" required>
         </div>
         <div>
             <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}" required>
+            <input type="password" id="password" name="password" th:field="*{password}" required>
         </div>
         <div>
             <button type="submit">1초 만에 로그인</button>

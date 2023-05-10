@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeetingService {
     private final MeetingRepository meetingRepository;
-    
+
     @Transactional(readOnly = true)
     public MeetingDto meeting(Long meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId)
@@ -22,7 +22,10 @@ public class MeetingService {
     }
 
     @Transactional(readOnly = true)
-    public List<MeetingDto> searchOffMeeting(String searchTitle) {
+    public List<MeetingDto> searchOffMeeting(String searchTitle, String userName) {
+        if (userName == null) {
+            throw new IllegalArgumentException("로그인 후 이용해주세요.");
+        }
         if (searchTitle == null) {
             return MeetingDto.toMeetingDtos(meetingRepository.findAll());
         }

@@ -1,56 +1,63 @@
 package moment.hong.component.user.application;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import moment.hong.component.user.api.request.UserLoginForm;
-import moment.hong.component.user.api.request.UserSingUpForm;
+import moment.hong.component.user.api.request.UserSignUpForm;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
 import moment.hong.component.user.domain.enumeration.UserRole;
 import moment.hong.component.user.dto.UserDto;
 import moment.hong.component.user.repository.UserRepository;
-import moment.hong.core.util.JwtTokenUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+import static moment.hong.core.config.SecurityConfig.passwordEncoder;
+
 @Service
 @RequiredArgsConstructor
-public class UserService {
+@Slf4j
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder;
-
-    @Value("${jwt.secret-key}")
-    private String secretKey;
-
-    @Value("${jwt.token.expired-time-ms}")
-    private Long expiredTimeMs;
 
     @Transactional
-    public UserDto join(UserSingUpForm userSingUpForm) {
-        User user = userRepository.save(
-                User.builder()
-                        .userRole(UserRole.USER)
-                        .gender(Gender.valueOf(userSingUpForm.getGender()))
-                        .userName(userSingUpForm.getUserName())
-                        .password(encoder.encode(userSingUpForm.getPassword()))
-                        .nickname(userSingUpForm.getNickname())
-                        .email(userSingUpForm.getEmail())
-                        .build()
-        );
-        return UserDto.from(user);
-    }
-
-    @Transactional
-    public String login(UserLoginForm userLoginForm) {
-        User user = userRepository.findByEmail(userLoginForm.getEmail());
-        matchesPasswordCheck(userLoginForm.getPassword(), user);
-        return JwtTokenUtils.generateToken(userLoginForm.getEmail(), secretKey, expiredTimeMs);
-    }
-
-    public void matchesPasswordCheck(String password, User user) {
-        if (!encoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException();
+    public UserDto join(UserSignUpForm userSignUpForm) {
+        Optional<User> userFind = Optional.ofNullable(userRepository.findByEmail(userSignUpForm.getEmail()));
+        if (!userFind.isEmpty()) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
+        User userSaved = userRepository.save(createUser(userSignUpForm));
+        return UserDto.from(userSaved);
+    }
+
+    @Transactional
+    public UserDto login(UserLoginForm userLoginForm) {
+        UserDto userDto = (UserDto) loadUserByUsername(userLoginForm.getEmail());
+        log.info(userDto.getEmail());
+        return userDto;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) {
+        Optional<User> findMember = Optional.ofNullable(userRepository.findByEmail(email));
+        if (findMember.isEmpty()) {
+            throw new IllegalArgumentException("존재하지 않는 email 입니다.");
+        }
+        return UserDto.from(findMember.get());
+    }
+
+    private User createUser(UserSignUpForm userSignUpForm) {
+        return User.builder()
+                .userRole(UserRole.USER)
+                .gender(Gender.valueOf(userSignUpForm.getGender()))
+                .userName(userSignUpForm.getUserName())
+                .password(passwordEncoder().encode(userSignUpForm.getPassword()))
+                .nickname(userSignUpForm.getNickname())
+                .email(userSignUpForm.getEmail())
+                .build();
     }
 }

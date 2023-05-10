@@ -3,21 +3,22 @@ package moment.hong.component.user.application;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moment.hong.component.pet.domain.Age;
+import moment.hong.component.user.api.request.UserLoginForm;
+import moment.hong.component.user.api.request.UserSignUpForm;
 import moment.hong.component.user.domain.Address;
 import moment.hong.component.user.domain.User;
 import moment.hong.component.user.domain.enumeration.Gender;
-import moment.hong.component.user.domain.enumeration.UserRole;
 import moment.hong.component.user.dto.UserDto;
 import moment.hong.component.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestConstructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -32,6 +33,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
+        this.address = new Address();
         this.address = new Address("도시", "서울 강남구 테헤란로");
         this.age = new Age(15, 2023, 4);
     }
@@ -39,70 +41,87 @@ public class UserServiceTest {
     @Test
     void 회원가입() {
         //given & when
-        User user = createUser();
-        UserDto userDto = getJoin(user);
+        UserSignUpForm userSignUpFormJoin = getUserSignUpFormJoin();
+        UserDto userJoin = userService.join(userSignUpFormJoin);
         //then
-        assertThat(userDto.getEmail()).isEqualTo(user.getEmail());
-        assertThat(userDto.getNickname()).isEqualTo(user.getNickname());
-        assertThat(userDto.getUserRole()).isEqualTo(user.getUserRole());
-        assertThat(userDto.getUsername()).isEqualTo(user.getUserName());
+        assertThat(userJoin.getEmail()).isEqualTo(userSignUpFormJoin.getEmail());
+        assertThat(userJoin.getNickname()).isEqualTo(userSignUpFormJoin.getNickname());
+        assertThat(userJoin.getUsername()).isEqualTo(userSignUpFormJoin.getUserName());
+    }
+
+    @Test
+    @DisplayName("중복 이메일은 회원가입을 실패한다.")
+    void 회원가입_실패() {
+        //given & when
+        User user = userCreate();
+        userRepository.save(user);
+
+        UserSignUpForm JoinException = JoinExceptionCreate();
+        //then
+        assertThatThrownBy(() -> userService.join(JoinException))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이미 사용 중인 이메일입니다.");
     }
 
     @Test
     void 로그인() {
-        //given & when
-        User user = createUser();
-        getJoin(user);
-        String jwtToken = getLogin(user);
+        //given
+        UserSignUpForm userSignUpFormLogin = getUserSignUpFormLogin();
+        userService.join(userSignUpFormLogin);
+        //when
+        UserLoginForm userLoginForm = UserLoginForm.of(userSignUpFormLogin.getEmail(), userSignUpFormLogin.getPassword());
+        UserDto userLogin = userService.login(userLoginForm);
         //then
-        assertThat(jwtToken).isNotNull();
-        log.info(jwtToken.toString());
+        assertThat(userLogin.getEmail()).isEqualTo("hong");
     }
 
     @Test
-    void 패스워드_불일치() {
-        // given
-        User user = createUser();
-        String invalidPassword = "에러 발생";
-
-        // when & then
-        assertAll("passwordCheck",
-                () -> assertThrows(IllegalArgumentException.class,
-                        () -> userService.matchesPasswordCheck(invalidPassword, user))
-        );
+    @DisplayName("존재하지 않는 email은 로그인에 실패한다.")
+    void 로그인_실패() {
+        //given & when
+        //then
+        assertThatThrownBy(() -> userService.loadUserByUsername(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("존재하지 않는 email 입니다.");
     }
 
-    private User createUser() {
-        return User.builder()
-                .userRole(UserRole.USER)
-                .gender(Gender.MAN)
+    private static UserSignUpForm getUserSignUpFormJoin() {
+        return UserSignUpForm.builder()
                 .userName("홍정완")
-                .address(address)
                 .password("123")
+                .gender(String.valueOf(Gender.MAN))
                 .nickname("닉네임")
-                .email("hongjungwan")
-                .age(age)
-                .selfIntroduction("최고의 개발자")
+                .email("textEmail")
                 .build();
     }
 
-    private UserDto getJoin(User user) {
-        return userService.join(
-                user.getUserName(),
-                user.getPassword(),
-                user.getGender(),
-                user.getAddress(),
-                user.getNickname(),
-                user.getEmail(),
-                user.getAge(),
-                user.getSelfIntroduction()
-        );
+    private static UserSignUpForm getUserSignUpFormLogin() {
+        return UserSignUpForm.builder()
+                .userName("홍정완")
+                .password("123")
+                .gender(String.valueOf(Gender.MAN))
+                .nickname("닉네임")
+                .email("hong")
+                .build();
     }
 
-    private String getLogin(User user) {
-        return userService.login(
-                user.getEmail(),
-                user.getPassword()
-        );
+    private static User userCreate() {
+        return User.builder()
+                .userName("홍정완")
+                .password("123")
+                .gender(Gender.valueOf(String.valueOf(Gender.MAN)))
+                .nickname("닉네임")
+                .email("textEmail2")
+                .build();
+    }
+
+    private static UserSignUpForm JoinExceptionCreate() {
+        return UserSignUpForm.builder()
+                .userName("홍정완")
+                .password("123")
+                .gender(String.valueOf(Gender.MAN))
+                .nickname("닉네임")
+                .email("textEmail2")
+                .build();
     }
 }

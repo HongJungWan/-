@@ -30,12 +30,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    
-    //quartz 설정
-    implementation 'org.springframework.boot:spring-boot-starter-quartz'
-
-    //스프링 batch 설정
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
 
     //타임리프 설정
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -51,12 +45,9 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
-    //스프링 시큐리티 & JWT 설정
+    //스프링 시큐리티
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 
     //Junit5 설정
     testImplementation 'junit:junit:4.13.1'
@@ -94,7 +85,8 @@ jacocoTestReport {
                             '**/core/**',
                             '**/*Builder',
                             '**/*Builder.*',
-                            '**/batch/**'
+                            '**/batch/**',
+                            '**/request/**',
                             // ...
                     ])
                 })

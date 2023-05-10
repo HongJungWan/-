@@ -31,14 +31,7 @@ class PetTest {
         //given & when
         Pet pet = createPet();
         //then
-        assertThat(pet).isNotNull();
-        assertThat(pet.getUser().getUserName()).isEqualTo("홍정완");
-        assertThat(pet.getAge().getAge()).isEqualTo(10);
-        assertThat(pet.getPetGender()).isEqualTo(PetGender.MAN);
-        assertThat(pet.getSizeType()).isEqualTo(SizeType.LARGE);
-        assertThat(pet.getBreed()).isEqualTo("리트리버");
-        assertThat(pet.getName()).isEqualTo("댕댕이");
-        assertThat(pet.isNeutering()).isTrue();
+        펫_정보_생성_검증(pet);
     }
 
     @Test
@@ -49,18 +42,7 @@ class PetTest {
         Pet updatedPet = updatedPet();
         pet.update(updatedPet);
         //then
-        assertThat(pet).isNotNull();
-        assertThat(pet.getId()).isNull();
-        assertThat(pet.getName()).isEqualTo("댕댕걸");
-        assertThat(pet.getAge()).isNotNull();
-        assertThat(pet.getAge().getAge()).isEqualTo(10);
-        assertThat(pet.getAge().getBirthMonth()).isEqualTo(4);
-        assertThat(pet.getAge().getBirthYear()).isEqualTo(2023);
-        assertThat(pet.getPetGender()).isEqualTo(PetGender.WOMAN);
-        assertThat(pet.getPetGender().getDescription()).isEqualTo("암컷");
-        assertThat(pet.getSizeType()).isEqualTo(SizeType.SMALL);
-        assertThat(pet.getSizeType().getDescription()).isEqualTo("소형견");
-        assertThat(pet.isNeutering()).isFalse();
+        펫_정보_업데이트_검증(pet);
     }
 
     private User createUser() {
@@ -98,5 +80,31 @@ class PetTest {
                 .sizeType(SizeType.SMALL)
                 .neutering(false)
                 .build();
+    }
+
+    private static void 펫_정보_생성_검증(Pet pet) {
+        assertThat(pet).isNotNull();
+        assertThat(pet.getUser().getUserName()).isEqualTo("홍정완");
+        assertThat(pet.getAge().getAge()).isEqualTo(10);
+        assertThat(pet.getPetGender()).isEqualTo(PetGender.MAN);
+        assertThat(pet.getSizeType()).isEqualTo(SizeType.LARGE);
+        assertThat(pet.getBreed()).isEqualTo("리트리버");
+        assertThat(pet.getName()).isEqualTo("댕댕이");
+        assertThat(pet.isNeutering()).isTrue();
+    }
+
+    private static void 펫_정보_업데이트_검증(Pet pet) {
+        assertThat(pet).isNotNull();
+        assertThat(pet.getId()).isNull();
+        assertThat(pet.getName()).isEqualTo("댕댕걸");
+        assertThat(pet.getAge()).isNotNull();
+        assertThat(pet.getAge().getAge()).isEqualTo(10);
+        assertThat(pet.getAge().getBirthMonth()).isEqualTo(4);
+        assertThat(pet.getAge().getBirthYear()).isEqualTo(2023);
+        assertThat(pet.getPetGender()).isEqualTo(PetGender.WOMAN);
+        assertThat(pet.getPetGender().getDescription()).isEqualTo("암컷");
+        assertThat(pet.getSizeType()).isEqualTo(SizeType.SMALL);
+        assertThat(pet.getSizeType().getDescription()).isEqualTo("소형견");
+        assertThat(pet.isNeutering()).isFalse();
     }
 }

@@ -22,20 +22,7 @@ public class UserTest {
         //given & when
         User user = createUser();
         //then
-        assertThat(user).isNotNull();
-        assertThat(user.getId()).isNull();
-        assertThat(user.getUserRole()).isEqualTo(UserRole.USER);
-        assertThat(user.getUserRole().getValue()).isEqualTo("회원");
-        assertThat(user.getGender()).isEqualTo(Gender.MAN);
-        assertThat(user.getGender().getValue()).isEqualTo("남자");
-        assertThat(user.getAddress().getCity()).isEqualTo("도시");
-        assertThat(user.getAddress().getDetail()).isEqualTo("상세 주소");
-        assertThat(user.getUserName()).isEqualTo("홍정완");
-        assertThat(user.getPassword()).isEqualTo("비밀번호");
-        assertThat(user.getEmail()).isEqualTo("hongjungwan");
-        assertThat(user.getAge()).isEqualTo(age);
-        assertThat(user.getSelfIntroduction()).isEqualTo("최고의 개발자");
-        assertThat(user.getAge()).isEqualTo(age);
+        유저_생성_검증(user);
     }
 
     @Test
@@ -89,5 +76,22 @@ public class UserTest {
                 .age(age)
                 .selfIntroduction("최고의 개발자")
                 .build();
+    }
+
+    private void 유저_생성_검증(User user) {
+        assertThat(user).isNotNull();
+        assertThat(user.getId()).isNull();
+        assertThat(user.getUserRole()).isEqualTo(UserRole.USER);
+        assertThat(user.getUserRole().getValue()).isEqualTo("회원");
+        assertThat(user.getGender()).isEqualTo(Gender.MAN);
+        assertThat(user.getGender().getValue()).isEqualTo("남자");
+        assertThat(user.getAddress().getCity()).isEqualTo("도시");
+        assertThat(user.getAddress().getDetail()).isEqualTo("상세 주소");
+        assertThat(user.getUserName()).isEqualTo("홍정완");
+        assertThat(user.getPassword()).isEqualTo("비밀번호");
+        assertThat(user.getEmail()).isEqualTo("hongjungwan");
+        assertThat(user.getAge()).isEqualTo(age);
+        assertThat(user.getSelfIntroduction()).isEqualTo("최고의 개발자");
+        assertThat(user.getAge()).isEqualTo(age);
     }
 }

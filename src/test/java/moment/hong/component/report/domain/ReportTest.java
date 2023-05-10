@@ -13,13 +13,7 @@ class ReportTest {
         //given & when
         Report report = createReport();
         //then
-        assertThat(report.getId()).isNull();
-        assertThat(report.getReporterUserId()).isEqualTo(1L);
-        assertThat(report.getReportedUserId()).isEqualTo(10);
-        assertThat(report.getReportedMeetingId()).isEqualTo(100L);
-        assertThat(report.getReportedCommentId()).isEqualTo(1000L);
-        assertThat(report.getReason()).isEqualTo("강아지 게시판에 고양이 사진 올림");
-        assertThat(report.getDeleted()).isFalse();
+        신고_생성_검증(report);
     }
 
     private static Report createReport() {
@@ -31,5 +25,15 @@ class ReportTest {
                 .reason("강아지 게시판에 고양이 사진 올림")
                 .deleted(false)
                 .build();
+    }
+
+    private static void 신고_생성_검증(Report report) {
+        assertThat(report.getId()).isNull();
+        assertThat(report.getReporterUserId()).isEqualTo(1L);
+        assertThat(report.getReportedUserId()).isEqualTo(10);
+        assertThat(report.getReportedMeetingId()).isEqualTo(100L);
+        assertThat(report.getReportedCommentId()).isEqualTo(1000L);
+        assertThat(report.getReason()).isEqualTo("강아지 게시판에 고양이 사진 올림");
+        assertThat(report.getDeleted()).isFalse();
     }
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserSingUpForm {
+public class UserSignUpForm {
     private String email;
     private String userName;
     private String password;
@@ -16,7 +16,7 @@ public class UserSingUpForm {
     private String gender;
 
     @Builder
-    public UserSingUpForm(String email, String userName, String password, String nickname, String gender) {
+    public UserSignUpForm(String email, String userName, String password, String nickname, String gender) {
         this.email = email;
         this.userName = userName;
         this.password = password;

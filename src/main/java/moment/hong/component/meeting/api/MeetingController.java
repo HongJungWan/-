@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moment.hong.component.meeting.application.MeetingService;
 import moment.hong.component.meeting.dto.MeetingDto;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +23,8 @@ public class MeetingController {
     private final MeetingService meetingService;
 
     @GetMapping("/on")
-    public String onMeeting(Model model, @RequestParam(required = false) String titleSearch) {
-        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch);
-        model.addAttribute("meetingDtoList", meetingDtoList);
-        return "meetings/meeting";
-    }
-
-    @GetMapping("/off")
-    public String offMeeting(Model model, @RequestParam(required = false) String titleSearch) {
-        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch);
+    public String onMeeting(Model model, @RequestParam(required = false) String titleSearch, Authentication authentication) {
+        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch, authentication.getName());
         model.addAttribute("meetingDtoList", meetingDtoList);
         return "meetings/meeting";
     }

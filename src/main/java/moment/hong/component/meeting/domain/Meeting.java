@@ -47,9 +47,10 @@ public class Meeting extends BaseEntity {
     private ZonedDateTime endDateTime;
 
     @Builder
-    public Meeting(MeetingStatus meetingStatus, String title, String description,
+    public Meeting(Long id, MeetingStatus meetingStatus, String title, String description,
                    String meetingPlace, int maximumPeople, int minimumPeople, int participants,
                    ZonedDateTime startDateTime, ZonedDateTime endDateTime) {
+        this.id = id;
         this.meetingStatus = meetingStatus;
         this.title = title;
         this.description = description;

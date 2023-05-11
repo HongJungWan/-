@@ -22,10 +22,7 @@ public class MeetingService {
     }
 
     @Transactional(readOnly = true)
-    public List<MeetingDto> searchOffMeeting(String searchTitle, String userName) {
-        if (userName == null) {
-            throw new IllegalArgumentException("로그인 후 이용해주세요.");
-        }
+    public List<MeetingDto> searchOffMeeting(String searchTitle) {
         if (searchTitle == null) {
             return MeetingDto.toMeetingDtos(meetingRepository.findAll());
         }

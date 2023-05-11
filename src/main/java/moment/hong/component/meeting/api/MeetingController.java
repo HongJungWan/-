@@ -2,15 +2,15 @@ package moment.hong.component.meeting.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import moment.hong.component.meeting.api.request.CreateMeetingForm;
+import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.application.MeetingService;
 import moment.hong.component.meeting.dto.MeetingDto;
+import moment.hong.component.usermeeting.application.UserMeetingService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,18 +21,44 @@ import java.util.List;
 public class MeetingController {
 
     private final MeetingService meetingService;
+    private final UserMeetingService userMeetingService;
 
     @GetMapping("/on")
-    public String onMeeting(Model model, @RequestParam(required = false) String titleSearch, Authentication authentication) {
-        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch, authentication.getName());
+    public String onMeeting(Model model, @RequestParam(required = false) String titleSearch) {
+        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch);
         model.addAttribute("meetingDtoList", meetingDtoList);
         return "meetings/meeting";
     }
 
+    @GetMapping("/on/create")
+    public String createMeeting(Model model) {
+        model.addAttribute("createMeetingForm", new CreateMeetingForm());
+        return "meetings/create-meeting";
+    }
+
+    @PostMapping("/on/create")
+    public String createMeeting(Model model, @ModelAttribute("createMeetingForm") CreateMeetingForm createMeetingForm,
+                                Authentication authentication) {
+        userMeetingService.UserMeetingCreate(authentication, createMeetingForm);
+        return "redirect:/meetings/on";
+    }
+
     @GetMapping("/{meetingId}")
-    public String detailOffMeeting(@PathVariable Long meetingId, Model model) {
+    public String detailOffMeeting(Model model, @PathVariable Long meetingId, Authentication authentication) {
+        if (userMeetingService.isUserIdEqualToMeetingUserId(authentication, meetingId)) {
+            model.addAttribute("editMeetingForm", new EditMeetingForm());
+            return "meetings/meetingDetailEdit";
+        }
         MeetingDto meetingDto = meetingService.meeting(meetingId);
         model.addAttribute("meetingDto", meetingDto);
         return "meetings/meetingDetail";
+    }
+
+    @PostMapping("/{meetingId}/edit")
+    public String detailOffMeetingEdit(Model model,
+                                       @PathVariable Long meetingId,
+                                       @ModelAttribute("editMeetingForm") EditMeetingForm editMeetingForm) {
+        meetingService.updateMeeting(meetingId, editMeetingForm);
+        return "redirect:/meetings/on";
     }
 }

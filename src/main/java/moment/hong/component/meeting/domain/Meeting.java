@@ -4,10 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.domain.enumeration.MeetingStatus;
 import moment.hong.core.common.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -62,7 +65,22 @@ public class Meeting extends BaseEntity {
         this.endDateTime = endDateTime;
     }
 
+    public void updateMeeting(EditMeetingForm editMeetingForm) {
+        this.meetingStatus = editMeetingForm.getMeetingStatus();
+        this.title = editMeetingForm.getTitle();
+        this.description = editMeetingForm.getDescription();
+        this.meetingPlace = editMeetingForm.getMeetingPlace();
+        this.maximumPeople = editMeetingForm.getMaximumPeople();
+        this.minimumPeople = editMeetingForm.getMinimumPeople();
+        this.startDateTime = convertToZonedDateTime(editMeetingForm.getStartDateTime());
+        this.endDateTime = convertToZonedDateTime(editMeetingForm.getEndDateTime());
+    }
+
     public void updateStatus(MeetingStatus meetingStatus) {
         this.meetingStatus = meetingStatus;
+    }
+
+    private static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+        return localDateTime.atZone(ZoneId.systemDefault());
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="header">
     <div class="container">
         <div class="row">
@@ -9,10 +9,10 @@
                     <ul class="nav">
                         <li><a href="/">Home</a></li>
                         <li><a href="/meetings/on">모일래❓</a></li>
-                        <li><a href="/meetings/on">모이자❗️</a></li>
+                        <li><a href="/meetings/on/create">모이자❗️</a></li>
                         <li><a href="/">모이 굿즈</a></li>
                         <li><a href="/">마이페이지</a></li>
-                        <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a></li>
+                        <li><a href="/users/logout">Logout</a></li>
                     </ul>
                 </nav>
             </div>

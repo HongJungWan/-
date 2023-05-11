@@ -74,113 +74,6 @@ header .logout a:last-child {
     margin-bottom: 70px;
 }
 
-/* sns 연동 */
-.sns-info {
-    text-align: center;
-    margin: 15px 0;
-}
-
-.sns-info b {
-    font-family: 'MaruBuri-Regular';
-}
-
-.sns-info .sns {
-    margin: 10px;
-}
-
-.sns-info .sns a i {
-    font-size: 50px;
-    width: 70px;
-    height: 70px;
-    line-height: 72px;
-    border-radius: 50%;
-    color: #fff;
-    margin: 5px;
-    transition: 0.35s;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.sns-info .sns a i:hover {
-    transform: scale(1.05);
-}
-
-.sns-info .sns a:nth-child(1) i {
-    background-color: #50C8FF;
-}
-
-.sns-info .sns a:nth-child(2) i {
-    background-color: #00C300;
-}
-
-.sns-info .sns a:nth-child(3) i {
-    background-color: #ffdc00;
-    color: brown;
-}
-
-/* sns 알려주는 박스 */
-.sns a {
-    position: relative;
-}
-
-.sns a:before {
-    content: attr(data-text);
-    position: absolute;
-    background-color: rgba(170, 170, 170, 0.4);
-    border-radius: 3px;
-    color: #222222;
-    width: 60px;
-    height: 25px;
-    font-size: 13px;
-    bottom: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    line-height: 25px;
-}
-
-.sns a:after {
-    content: '';
-    position: absolute;
-    background-color: rgba(170, 170, 170, 0.4);
-    width: 4px;
-    height: 4px;
-    bottom: -22px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-}
-
-.sns a:before,
-.sns a:after {
-    display: none;
-}
-
-.sns a:hover:before,
-.sns a:hover:after {
-    display: block;
-}
-
-/* 예약하기 */
-.reserve {
-    height: 400px;
-}
-
-.reserve a {
-
-    display: inline-block;
-    width: 180px;
-    height: 55px;
-    text-align: center;
-    padding: 15px 0;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.reserve a:hover {
-    transform: scale(1.05);
-}
-
 /* 등록 */
 .register {
     width: 460px;
@@ -230,4 +123,27 @@ header .logout a:last-child {
 
 .register button:not(input[type=number]):focus {
     border: 1px solid skyblue;
+}
+
+.datetime-tooltip {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: dodgerblue;
+    text-align: center;
+}
+
+.radio-container {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 7px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.radio-container input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-wrapper {
+    display: flex;
 }

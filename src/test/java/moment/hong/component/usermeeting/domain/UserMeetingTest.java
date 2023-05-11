@@ -36,7 +36,7 @@ class UserMeetingTest {
     @Test
     void 유저_미팅_생성_정적팩토리() {
         //given & when
-        UserMeeting userMeeting = UserMeeting.of(createUser(), createMeeting());
+        UserMeeting userMeeting = UserMeeting.of(createUser(), createMeeting(), true);
         //then
         유저_미팅_생성_검증(userMeeting);
     }

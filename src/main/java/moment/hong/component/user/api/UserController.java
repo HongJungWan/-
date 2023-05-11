@@ -30,7 +30,7 @@ public class UserController {
         userService.login(userLoginForm);
         return "redirect:/";
     }
-
+    
     @GetMapping("/sign-up")
     public String singUp(@ModelAttribute("userSignUpForm") UserSignUpForm userSignUpForm) {
         return "users/sign-up";

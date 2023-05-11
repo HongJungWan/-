@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>🐾 모임 개설 🐾</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+
+    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo-plot-listing.css}">
+</head>
+<body>
+<header class="header-area header-sticky wow slideInDown" data-wow-delay="0s" data-wow-duration="0.75s"
+        th:insert="fragments/header.html">
+</header>
+<div class="register">
+    <br/><br/><br/>
+    <h1 class="hR">모임 개설</h1>
+    <form th:action="@{/on/meetings/create}" method="post" th:object="${createMeetingForm}">
+        <div class="info">
+            <label for="title"><b><br/>모임 명</b></label>
+            <input id="title" name="title" th:field="*{title}" type="text">
+        </div>
+        <div class="info">
+            <label for="description"><b><br/>모임 소개</b></label>
+            <input id="description" name="description" th:field="*{description}" type="text">
+        </div>
+        <div class="info">
+            <label for="meetingPlace"><b><br/>모임 장소</b></label>
+            <input id="meetingPlace" name="meetingPlace" th:field="*{meetingPlace}" type="text">
+        </div>
+        <p>위도 경도 입력 어떻게 받을까. </p>
+        <br/>
+        <div class="info">
+            <label for="maximumPeople"><b><br/>모임 최대 인원</b></label>
+            <input id="maximumPeople" name="maximumPeople" th:field="*{maximumPeople}" type="number">
+        </div>
+        <div class="info">
+            <label for="minimumPeople"><b><br/>모임 최소 인원</b></label>
+            <input id="minimumPeople" name="minimumPeople" th:field="*{minimumPeople}" type="number">
+        </div>
+        <br/><br/>
+        <div class="info">
+            <span class="datetime-tooltip">오른쪽 달력 아이콘을 클릭해 주세요❗</span>
+            <br/>
+            <label for="startDateTime"><b><br/>모집 시작 기간 🔖</b></label>
+            <input id="startDateTime" name="startDateTime" th:field="*{startDateTime}" type="datetime-local">
+        </div>
+        <div class="info">
+            <label for="endDateTime"><b><br/>모집 마감 기간 🚩</b></label>
+            <input id="endDateTime" name="endDateTime" th:field="*{endDateTime}" type="datetime-local">
+        </div>
+        <br/><br/>
+        <div>
+            <button type="submit">1초 만에 개설</button>
+        </div>
+        <input th:onclick="|location.href='@{/}'|" type="button" value="취소">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </form>
+</div>
+</body>
+<footer class="footer" data-wow-delay="0s" data-wow-duration="0.75s"
+        th:insert="fragments/footer.html">
+</footer>
+</html>

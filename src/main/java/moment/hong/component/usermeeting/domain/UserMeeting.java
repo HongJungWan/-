@@ -27,16 +27,20 @@ public class UserMeeting {
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
+    private boolean leader;
+
     @Builder
-    public UserMeeting(User user, Meeting meeting) {
+    public UserMeeting(User user, Meeting meeting, boolean leader) {
         this.user = user;
         this.meeting = meeting;
+        this.leader = leader;
     }
 
-    public static UserMeeting of(User user, Meeting meeting) {
+    public static UserMeeting of(User user, Meeting meeting, boolean leader) {
         return UserMeeting.builder()
                 .user(user)
                 .meeting(meeting)
+                .leader(true)
                 .build();
     }
 }

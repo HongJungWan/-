@@ -231,3 +231,10 @@ header .logout a:last-child {
 .register button:not(input[type=number]):focus {
     border: 1px solid skyblue;
 }
+
+.datetime-tooltip {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: dodgerblue;
+    text-align: center;
+}

@@ -69,8 +69,7 @@ class MeetingServiceTest {
     @DisplayName("검색어 존재 X -> 모임 전체 조회")
     void 모임_전체_조회() {
         //given & when
-        String userName = "홍정완";
-        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(null, userName);
+        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(null);
         //then
         모임_전체_조회_검증(meetingDtos);
     }
@@ -80,22 +79,9 @@ class MeetingServiceTest {
     void 모임_검색() {
         //given & when
         String searchTitle = "테스트";
-        String userName = "홍정완";
-        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(searchTitle, userName);
+        List<MeetingDto> meetingDtos = meetingService.searchOffMeeting(searchTitle);
         //then
         모임_검색_조회_검증(meetingDtos);
-    }
-
-    @Test
-    @DisplayName("미 로그인 시 -> 모임_검색_실패")
-    void 모임_검색_실패() {
-        //given & when
-        String searchTitle = "테스트";
-        String userName = null;
-        //then
-        assertThatThrownBy(() -> meetingService.searchOffMeeting(searchTitle, userName))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("로그인 후 이용해주세요.");
     }
 
     private static Meeting createMeeting() {

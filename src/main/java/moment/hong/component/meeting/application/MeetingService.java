@@ -1,6 +1,7 @@
 package moment.hong.component.meeting.application;
 
 import lombok.RequiredArgsConstructor;
+import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.domain.Meeting;
 import moment.hong.component.meeting.dto.MeetingDto;
 import moment.hong.component.meeting.repository.MeetingRepository;
@@ -27,5 +28,11 @@ public class MeetingService {
             return MeetingDto.toMeetingDtos(meetingRepository.findAll());
         }
         return MeetingDto.toMeetingDtos(meetingRepository.findByTitleContaining(searchTitle));
+    }
+
+    @Transactional
+    public void updateMeeting(Long meetingId, EditMeetingForm editMeetingForm) {
+        Meeting meeting = meetingRepository.findById(meetingId).orElseThrow();
+        meeting.updateMeeting(editMeetingForm);
     }
 }

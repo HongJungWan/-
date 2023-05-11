@@ -3,6 +3,7 @@ package moment.hong.component.meeting.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moment.hong.component.meeting.api.request.CreateMeetingForm;
+import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.application.MeetingService;
 import moment.hong.component.meeting.dto.MeetingDto;
 import moment.hong.component.usermeeting.application.UserMeetingService;
@@ -43,9 +44,21 @@ public class MeetingController {
     }
 
     @GetMapping("/{meetingId}")
-    public String detailOffMeeting(@PathVariable Long meetingId, Model model) {
+    public String detailOffMeeting(Model model, @PathVariable Long meetingId, Authentication authentication) {
+        if (userMeetingService.isUserIdEqualToMeetingUserId(authentication, meetingId)) {
+            model.addAttribute("editMeetingForm", new EditMeetingForm());
+            return "meetings/meetingDetailEdit";
+        }
         MeetingDto meetingDto = meetingService.meeting(meetingId);
         model.addAttribute("meetingDto", meetingDto);
         return "meetings/meetingDetail";
+    }
+
+    @PostMapping("/{meetingId}/edit")
+    public String detailOffMeetingEdit(Model model,
+                                       @PathVariable Long meetingId,
+                                       @ModelAttribute("editMeetingForm") EditMeetingForm editMeetingForm) {
+        meetingService.updateMeeting(meetingId, editMeetingForm);
+        return "redirect:/meetings/on";
     }
 }

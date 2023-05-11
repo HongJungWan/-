@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,13 @@ public class UserMeetingService {
 
         meetingRepository.save(meeting);
         userMeetingRepository.save(createUserMeeting(user, meeting));
+    }
+
+    @Transactional
+    public boolean isUserIdEqualToMeetingUserId(Authentication authentication, Long meetingId) {
+        User user = userRepository.findByUserName(authentication.getName());
+        Optional<UserMeeting> userMeeting = userMeetingRepository.findByUserIdAndMeetingId(user.getId(), meetingId);
+        return userMeeting.isPresent();
     }
 
     private static UserMeeting createUserMeeting(User user, Meeting meeting) {

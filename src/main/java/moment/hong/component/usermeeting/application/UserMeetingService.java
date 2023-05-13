@@ -35,7 +35,13 @@ public class UserMeetingService {
 
     @Transactional
     public boolean isUserIdEqualToMeetingUserId(Authentication authentication, Long meetingId) {
+        if (authentication == null || authentication.getName() == null) {
+            return false;
+        }
         User user = userRepository.findByUserName(authentication.getName());
+        if (user == null) {
+            return false;
+        }
         Optional<UserMeeting> userMeeting = userMeetingRepository.findByUserIdAndMeetingId(user.getId(), meetingId);
         return userMeeting.isPresent();
     }

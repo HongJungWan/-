@@ -121,7 +121,7 @@ jacocoTestReport {
                             '**/*Builder',
                             '**/*Builder.*',
                             '**/request/**',
-                            '**/Q*.java'
+                            '**/Q**'
                             // ...
                     ])
                 })
@@ -130,12 +130,22 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
+    def Qdomains = []
+    // 패키지 + 클래스명
+    for (qPattern in '*.QA'..'*.QZ') { // qPattern = '*.QA', '*.QB', ... '*.QZ'
+        Qdomains.add(qPattern + '*')
+    }
+
     violationRules {
         rule {
+            enabled = true
             element = 'CLASS'
+
+            excludes = [] + Qdomains // 제외할 Qdomains 패턴 추가
         }
     }
 }
+
 
 test {
     jacoco {

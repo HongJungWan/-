@@ -73,6 +73,7 @@ class UserMeetingTest {
         return UserMeeting.builder()
                 .user(createUser())
                 .meeting(createMeeting())
+                .leader(true)
                 .build();
     }
 
@@ -81,5 +82,6 @@ class UserMeetingTest {
         assertThat(userMeeting.getId()).isNull();
         assertThat(userMeeting.getUser().getEmail()).isEqualTo("hongjungwan");
         assertThat(userMeeting.getMeeting().getTitle()).isEqualTo("최고의 개발자");
+        assertThat(userMeeting.isLeader()).isTrue();
     }
 }

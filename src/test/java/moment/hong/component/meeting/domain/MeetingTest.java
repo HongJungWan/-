@@ -3,7 +3,11 @@ package moment.hong.component.meeting.domain;
 import lombok.extern.slf4j.Slf4j;
 import moment.hong.component.meeting.domain.enumeration.MeetingStatus;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +36,16 @@ class MeetingTest {
         meeting.updateStatus(MeetingStatus.END);
         //then
         assertThat(meeting.getMeetingStatus()).isEqualTo(MeetingStatus.END);
+    }
+
+    @Test
+    @DisplayName("localDateTime -> ZonedDateTime 변환 성공")
+    void convertToZonedDateTime() {
+        //given & when
+        LocalDateTime localDateTime = LocalDateTime.parse("2023-05-15T00:00:00"); // Add time information
+        ZonedDateTime zonedDateTime = Meeting.convertToZonedDateTime(localDateTime);
+        //then
+        assertThat(zonedDateTime).isEqualTo("2023-05-15T00:00+09:00[Asia/Seoul]");
     }
 
     private Meeting createMeeting() {

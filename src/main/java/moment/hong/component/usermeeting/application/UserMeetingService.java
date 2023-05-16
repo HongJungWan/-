@@ -67,7 +67,10 @@ public class UserMeetingService {
                 .build();
     }
 
-    private static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+    public static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
         return localDateTime.atZone(ZoneId.systemDefault());
     }
 }

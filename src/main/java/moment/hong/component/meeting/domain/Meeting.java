@@ -80,7 +80,10 @@ public class Meeting extends BaseEntity {
         this.meetingStatus = meetingStatus;
     }
 
-    private static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+    public static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
         return localDateTime.atZone(ZoneId.systemDefault());
     }
 }

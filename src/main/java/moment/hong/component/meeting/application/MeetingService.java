@@ -31,8 +31,10 @@ public class MeetingService {
     }
 
     @Transactional
-    public void updateMeeting(Long meetingId, EditMeetingForm editMeetingForm) {
-        Meeting meeting = meetingRepository.findById(meetingId).orElseThrow();
+    public MeetingDto updateMeeting(Long meetingId, EditMeetingForm editMeetingForm) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미팅 ID"));
         meeting.updateMeeting(editMeetingForm);
+        return MeetingDto.toMeetingDto(meeting);
     }
 }

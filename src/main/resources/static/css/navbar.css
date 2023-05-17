@@ -14,14 +14,6 @@ img {
     margin: 0px auto;
 }
 
-.card-body {
-    border-radius: 30%;
-}
-
-.card {
-    border-radius: 50%;
-}
-
 ul.list-group {
     border-radius: 50%;
     overflow: hidden;

@@ -25,12 +25,13 @@ public class UserMeetingService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void UserMeetingCreate(Authentication authentication, CreateMeetingForm createMeetingForm) {
+    public Meeting userMeetingCreate(Authentication authentication, CreateMeetingForm createMeetingForm) {
         User user = userRepository.findByUserName(authentication.getName());
         Meeting meeting = createMeeting(createMeetingForm);
 
         meetingRepository.save(meeting);
         userMeetingRepository.save(createUserMeeting(user, meeting));
+        return meeting;
     }
 
     @Transactional
@@ -67,7 +68,10 @@ public class UserMeetingService {
                 .build();
     }
 
-    private static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+    public static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
         return localDateTime.atZone(ZoneId.systemDefault());
     }
 }

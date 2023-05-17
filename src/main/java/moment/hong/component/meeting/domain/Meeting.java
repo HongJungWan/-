@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.domain.enumeration.MeetingStatus;
+import moment.hong.component.meeting_image.domain.MeetingImage;
 import moment.hong.core.common.BaseEntity;
 
 import javax.persistence.*;
@@ -20,6 +21,10 @@ public class Meeting extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "meeting_image_id")
+    private MeetingImage meetingImage;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "meeting_status")
@@ -50,10 +55,11 @@ public class Meeting extends BaseEntity {
     private ZonedDateTime endDateTime;
 
     @Builder
-    public Meeting(Long id, MeetingStatus meetingStatus, String title, String description,
+    public Meeting(Long id, MeetingImage meetingImage, MeetingStatus meetingStatus, String title, String description,
                    String meetingPlace, int maximumPeople, int minimumPeople, int participants,
                    ZonedDateTime startDateTime, ZonedDateTime endDateTime) {
         this.id = id;
+        this.meetingImage = meetingImage;
         this.meetingStatus = meetingStatus;
         this.title = title;
         this.description = description;
@@ -76,11 +82,18 @@ public class Meeting extends BaseEntity {
         this.endDateTime = convertToZonedDateTime(editMeetingForm.getEndDateTime());
     }
 
+    public void addImage(MeetingImage meetingImage) {
+        this.meetingImage = meetingImage;
+    }
+
     public void updateStatus(MeetingStatus meetingStatus) {
         this.meetingStatus = meetingStatus;
     }
 
-    private static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+    public static ZonedDateTime convertToZonedDateTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
         return localDateTime.atZone(ZoneId.systemDefault());
     }
 }

@@ -16,7 +16,8 @@
 <div class="register">
     <br/><br/><br/>
     <h1 class="hR">모임 개설</h1>
-    <form th:action="@{/on/meetings/create}" method="post" th:object="${createMeetingForm}">
+    <form th:action="@{/meetings/on/create}" method="post" th:object="${createMeetingForm}"
+          enctype="multipart/form-data">
         <div class="info">
             <label for="title"><b><br/>모임 명</b></label>
             <input id="title" name="title" th:field="*{title}" type="text">
@@ -24,6 +25,10 @@
         <div class="info">
             <label for="description"><b><br/>모임 소개</b></label>
             <input id="description" name="description" th:field="*{description}" type="text">
+        </div>
+        <div class="info">
+            <label for="path"><b><br/>모임 이미지</b></label>
+            <input id="path" name="path" type="file">
         </div>
         <div class="info">
             <label for="meetingPlace"><b><br/>모임 장소</b></label>

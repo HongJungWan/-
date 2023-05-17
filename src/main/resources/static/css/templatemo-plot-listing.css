@@ -68,6 +68,7 @@ header, nav, section, article, aside, footer, hgroup {
 
 html, body {
     margin-top: 50px;
+    margin-bottom: 300px;
     padding-bottom: 250px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -1132,6 +1133,7 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    margin-top: auto;
     border-top: 1px solid #eee;
 }
 

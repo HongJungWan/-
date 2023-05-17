@@ -2,6 +2,7 @@ package moment.hong.component.meeting.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.domain.Meeting;
 import moment.hong.component.meeting.domain.enumeration.MeetingStatus;
 import moment.hong.component.meeting.dto.MeetingDto;
@@ -84,6 +85,29 @@ class MeetingServiceTest {
         모임_검색_조회_검증(meetingDtos);
     }
 
+    @Test
+    @DisplayName("모임 상세 내용 업데이트 성공")
+    void 모임_업데이트() {
+        //given
+        EditMeetingForm editMeetingForm = createEditMeetingForm();
+        Long meetingId = 1L;
+        //when
+        MeetingDto meetingDto = meetingService.updateMeeting(meetingId, editMeetingForm);
+        //then
+        모임_업데이트_검증(meetingDto);
+    }
+
+    @Test
+    @DisplayName("모임 상세 내용 업데이트 실패")
+    void 모임_업데이트_실패() {
+        //given
+        EditMeetingForm editMeetingForm = new EditMeetingForm();
+        //when & then
+        assertThatThrownBy(() -> meetingService.updateMeeting(9999L, editMeetingForm))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("존재하지 않는 미팅 ID");
+    }
+
     private static Meeting createMeeting() {
         return Meeting.builder()
                 .id(1L)
@@ -110,6 +134,19 @@ class MeetingServiceTest {
                 .email("hongjungwan")
                 .age(age)
                 .selfIntroduction("최고의 개발자")
+                .build();
+    }
+
+    private static EditMeetingForm createEditMeetingForm() {
+        return EditMeetingForm.builder()
+                .meetingStatus(MeetingStatus.END)
+                .title("모임 수정")
+                .description("설명 수정")
+                .meetingPlace("장소 수정")
+                .maximumPeople(2)
+                .minimumPeople(1)
+                .startDateTime(null)
+                .endDateTime(null)
                 .build();
     }
 
@@ -150,5 +187,16 @@ class MeetingServiceTest {
         assertThat(meetingDtos.get(0).getParticipant()).isEqualTo(2);
         assertThat(meetingDtos.get(0).getStartDateTime()).isNull();
         assertThat(meetingDtos.get(0).getEndDateTime()).isNull();
+    }
+
+    private static void 모임_업데이트_검증(MeetingDto meetingDto) {
+        assertThat(meetingDto.getTitle()).isEqualTo("모임 수정");
+        assertThat(meetingDto.getMeetingStatus()).isEqualTo(MeetingStatus.END.getDescription());
+        assertThat(meetingDto.getDescription()).isEqualTo("설명 수정");
+        assertThat(meetingDto.getMeetingPlace()).isEqualTo("장소 수정");
+        assertThat(meetingDto.getMaximumPeople()).isEqualTo(2);
+        assertThat(meetingDto.getMinimPeople()).isEqualTo(1);
+        assertThat(meetingDto.getStartDateTime()).isNull();
+        assertThat(meetingDto.getEndDateTime()).isNull();
     }
 }

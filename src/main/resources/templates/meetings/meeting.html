@@ -37,7 +37,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item" th:text="'이미지 넣을 자리'"><</li>
+                                        <img class="list-group-item" th:src="${meeting.path}" width="350" height="150"/>
                                         <li class="list-group-item" th:text="'' + ${meeting.meetingStatus} + '🌟'"></li>
                                         <li class="list-group-item">
                                             <a th:href="@{/meetings/{id}(id=${meeting.id})}"

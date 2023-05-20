@@ -44,3 +44,5 @@ application-batch.yml
 application-prod.yml
 **/resources/application-test.yml
 quartz.properties
+docker-compose.yml
+data/**

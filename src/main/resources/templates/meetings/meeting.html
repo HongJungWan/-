@@ -30,8 +30,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-deck">
-                    <div class="row row-cols-1 row-cols-md-4">
-                        <div th:each="meeting, meetingStat : ${meetingDtoList}"
+                    <div class="row row-cols-1 row-cols-md-4"
+                         th:if="${meetingDtoPage != null && !meetingDtoPage.empty}">
+                        <div th:each="meeting, meetingStat : ${meetingDtoPage.content}"
                              th:classappend="${(meetingStat.index % 4 != 0) ? 'col-sm-3 mb-4' : 'col-sm-3'}">
                             <h4 class="card-title" th:text="${meeting.title}"></h4>
                             <div class="card">
@@ -48,11 +49,28 @@
                             </div>
                         </div>
                     </div>
+                    <div th:if="${meetingDtoPage == null || meetingDtoPage.empty}">
+                        <p>No meetings found.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item" th:unless="${meetingDtoPage.first}">
+            <a class="page-link" th:href="@{/meetings/on(page=${meetingDtoPage.number - 1})}">Previous</a>
+        </li>
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, meetingDtoPage.totalPages - 1)}"
+            th:class="${i == meetingDtoPage.number ? 'active' : ''}">
+            <a class="page-link-list" th:href="@{/meetings/on(page=${i})}">[[${i + 1}]]</a>
+        </li>
+        <li class="page-item" th:unless="${meetingDtoPage.last}">
+            <a class="page-link" th:href="@{/meetings/on(page=${meetingDtoPage.number + 1})}">Next</a>
+        </li>
+    </ul>
+</nav>
 </body>
 <footer class="footer" data-wow-delay="0s" data-wow-duration="0.75s"
         th:insert="fragments/footer.html">

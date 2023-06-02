@@ -68,8 +68,8 @@ header, nav, section, article, aside, footer, hgroup {
 
 html, body {
     margin-top: 50px;
-    margin-bottom: 300px;
-    padding-bottom: 250px;
+    margin-bottom: 100px;
+    padding-bottom: 100px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     background-color: #fff;

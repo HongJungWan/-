@@ -9,13 +9,14 @@ import moment.hong.component.meeting.domain.Meeting;
 import moment.hong.component.meeting.dto.MeetingDto;
 import moment.hong.component.meeting_image.service.MeetingImageService;
 import moment.hong.component.usermeeting.application.UserMeetingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -28,9 +29,11 @@ public class MeetingController {
     private final MeetingImageService meetingImageService;
 
     @GetMapping("/on")
-    public String onMeeting(Model model, @RequestParam(required = false) String titleSearch) {
-        List<MeetingDto> meetingDtoList = meetingService.searchOffMeeting(titleSearch);
-        model.addAttribute("meetingDtoList", meetingDtoList);
+    public String onMeeting(Model model,
+                            @RequestParam(required = false, defaultValue = "") String titleSearch,
+                            @PageableDefault(size = 8, sort = "id") Pageable pageable) { // 테스트용 8개
+        Page<MeetingDto> meetingDtoPage = meetingService.searchOffMeeting(titleSearch, pageable);
+        model.addAttribute("meetingDtoPage", meetingDtoPage);
         return "meetings/meeting";
     }
 

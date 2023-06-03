@@ -147,3 +147,13 @@ header .logout a:last-child {
 .radio-wrapper {
     display: flex;
 }
+
+.pagination {
+    margin-top: 150px;
+    justify-content: center;
+    font-size: calc(1rem + 4px); /* 기본 폰트 크기에 10px를 더합니다. */
+}
+
+.pagination .page-link-list {
+    margin: 5px;
+}

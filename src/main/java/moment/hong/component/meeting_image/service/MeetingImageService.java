@@ -28,8 +28,8 @@ public class MeetingImageService {
 
         MeetingImage accountImage = createMeetingImage(origFilename, filename, imageUrl, s3Key);
         meetingImageRepository.save(accountImage);
-
         meeting.addImage(accountImage);
+
         meetingRepository.save(meeting);
     }
 

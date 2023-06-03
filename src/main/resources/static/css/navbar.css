@@ -27,7 +27,7 @@ ul.list-group {
 .search {
     background-color: #FFFFFF; /* 버튼의 배경색을 파란색으로 설정 */
     padding: 15px; /* 버튼의 패딩을 설정 */
-    margin-bottom: 100px; /* 버튼 위쪽 여백을 설정 */
+    footer: 100px; /* 버튼 위쪽 여백을 설정 */
 }
 
 .search input[type="text"] {

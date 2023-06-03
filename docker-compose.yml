@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  batch:
+    container_name: spring_batch
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: "spring_batch"
+      MYSQL_ROOT_PASSWORD: "password1234"
+      TZ: "Asia/Seoul"
+    ports:
+      - "3307:3306" # 포트 변경
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+
+  application:
+    container_name: day
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: "day"
+      MYSQL_ROOT_PASSWORD: "hong"
+      TZ: "Asia/Seoul"
+    ports:
+      - "3306:3306"
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    volumes:
+      - ./data/:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)

@@ -1,14 +1,16 @@
 package moment.hong.component.meeting.application;
 
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import moment.hong.component.meeting.api.request.EditMeetingForm;
 import moment.hong.component.meeting.domain.Meeting;
+import moment.hong.component.meeting.domain.QMeeting;
 import moment.hong.component.meeting.dto.MeetingDto;
 import moment.hong.component.meeting.repository.MeetingRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +25,15 @@ public class MeetingService {
     }
 
     @Transactional(readOnly = true)
-    public List<MeetingDto> searchOffMeeting(String searchTitle) {
-        if (searchTitle == null) {
-            return MeetingDto.toMeetingDtos(meetingRepository.findAll());
+    public Page<MeetingDto> searchOffMeeting(String searchTitle, Pageable pageable) {
+        QMeeting meeting = QMeeting.meeting;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (searchTitle != null) {
+            builder.and(meeting.title.containsIgnoreCase(searchTitle));
         }
-        return MeetingDto.toMeetingDtos(meetingRepository.findByTitleContaining(searchTitle));
+        Page<Meeting> meetingPage = meetingRepository.findAll(builder, pageable);
+        return meetingPage.map(MeetingDto::toMeetingDto);
     }
 
     @Transactional
